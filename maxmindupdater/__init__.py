@@ -1,10 +1,9 @@
 from shutil import move
 import os
 import hashlib
+import sys
 import tarfile
 
-from django.conf import settings
-from django.core.management.base import BaseCommand
 import requests
 
 from userservice.lib.util import ip_to_country_code
@@ -27,13 +26,11 @@ def hash_file(filename):
     return hasher.hexdigest()
 
 
-class Command(BaseCommand):
-    def handle(self, *args, **options):
-        curr_db = settings.GEOIP_DB
+def update_db(curr_db, license_key):
         curr_db_path = os.path.dirname(curr_db)
 
         r = requests.get(UPDATE_URL,
-                         params={'license_key': settings.MAXMIND_LICENSE_KEY,
+                         params={'license_key': license_key,
                                  'edition_id': 'GeoIP2-Country',
                                  'suffix': 'tar.gz.md5',
                                  })
@@ -43,7 +40,7 @@ class Command(BaseCommand):
             return
 
         r = requests.get(UPDATE_URL, stream=True,
-                         params={'license_key': settings.MAXMIND_LICENSE_KEY,
+                         params={'license_key': license_key,
                                  'edition_id': 'GeoIP2-Country',
                                  'suffix': 'tar.gz',
                                  })
@@ -68,8 +65,8 @@ class Command(BaseCommand):
         except Exception, e:
             # pyGeoIP could break in a variety of ways - we don't
             # particularly care which ones.
-            self.stderr('Retrieved invalid GeoIP database - '
-                        'check MaxMind account details: %s' % e)
+            sys.stderr.write('Retrieved invalid GeoIP database - '
+                             'check MaxMind account details: %s' % e)
         else:
             if not os.path.exists(os.path.dirname(curr_db)):
                 os.makedirs(os.path.dirname(curr_db))
