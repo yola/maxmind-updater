@@ -1,3 +1,5 @@
+"""Function to keep a maxmind database file up to date"""
+
 from shutil import move
 import os
 import hashlib
@@ -5,6 +7,9 @@ import sys
 import tarfile
 
 import requests
+
+__version__ = '0.1.0'
+__url__ = 'https://github.com/yola/maxmind-updater'
 
 UPDATE_URL = 'https://download.maxmind.com/app/geoip_download'
 
