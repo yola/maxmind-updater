@@ -6,8 +6,6 @@ import tarfile
 
 import requests
 
-from userservice.lib.util import ip_to_country_code
-
 UPDATE_URL = 'https://download.maxmind.com/app/geoip_download'
 
 
@@ -60,8 +58,10 @@ def update_db(curr_db, license_key):
         # appending the path to the curr_db_path where it was extracted.
         new_db = os.path.join(curr_db_path, extract_members[0].path)
     try:
-        ip_to_country_code('8.8.8.8', new_db)
-        ip_to_country_code('2001:420::', new_db)
+        pass
+        # TODO
+        # test_ip('8.8.8.8', new_db)
+        # test_ip('2001:420::', new_db)
     except Exception, e:
         # pyGeoIP could break in a variety of ways - we don't
         # particularly care which ones.
