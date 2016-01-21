@@ -12,7 +12,7 @@ __version__ = '0.1.0'
 __url__ = 'https://github.com/yola/maxmind-updater'
 
 
-def hash_file(filename):
+def _hash_file(filename):
     if not os.path.exists(filename):
         return ''
 
@@ -39,7 +39,7 @@ def update_db(db_path, license_key, edition_id):
                             **kwargs)
 
     expected_md5 = maxmind_download('tar.gz.md5').content
-    curr_md5 = hash_file('%s.tar.gz' % db_path)
+    curr_md5 = _hash_file('%s.tar.gz' % db_path)
     if expected_md5 == curr_md5 and os.path.exists(db_path):
         return
 
