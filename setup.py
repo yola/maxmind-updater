@@ -3,7 +3,7 @@ from setuptools import setup
 import maxmindupdater
 
 with open('README.rst') as readme_file:
-    readme = readme_file.read()
+    readme = readme_file.read().decode('utf8')
 
 setup(
     name=maxmindupdater.__name__,
