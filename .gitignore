@@ -61,3 +61,6 @@ target/
 # Outputs of the script itself
 *.mmdb
 *.tar.gz
+
+# Test script output
+configuration.json
