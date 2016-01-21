@@ -64,7 +64,7 @@ def update_db(db_path, license_key, edition_id):
         # TODO
         # test_ip('8.8.8.8', new_db)
         # test_ip('2001:420::', new_db)
-    except Exception, e:
+    except Exception as e:
         # pyGeoIP could break in a variety of ways - we don't
         # particularly care which ones.
         sys.stderr.write('Retrieved invalid GeoIP database - '
