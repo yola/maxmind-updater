@@ -29,6 +29,7 @@ def _hash_file(filename):
 
 def update_db(db_path, license_key, edition_id):
     db_dir_path = os.path.dirname(db_path)
+    db_archive_path = '%s.tar.gz' % db_path
 
     def maxmind_download(suffix, **kwargs):
         return requests.get('https://download.maxmind.com/app/geoip_download',
@@ -39,17 +40,17 @@ def update_db(db_path, license_key, edition_id):
                             **kwargs)
 
     expected_md5 = maxmind_download('tar.gz.md5').content
-    curr_md5 = _hash_file('%s.tar.gz' % db_path)
+    curr_md5 = _hash_file(db_archive_path)
     if expected_md5 == curr_md5 and os.path.exists(db_path):
         return
 
-    with open('%s.tar.gz' % db_path, 'wb') as local_zip:
+    with open(db_archive_path, 'wb') as local_zip:
         for chunk in maxmind_download('tar.gz', stream=True
                                       ).iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 local_zip.write(chunk)
 
-    with tarfile.open('%s.tar.gz' % db_path) as tar_file:
+    with tarfile.open(db_archive_path) as tar_file:
         # We only want the mmdb file. Maxmind kindly includes things
         # we don't want.
         extract_members = [member for member in tar_file.getmembers()
