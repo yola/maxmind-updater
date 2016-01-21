@@ -55,6 +55,7 @@ def update_db(db_path, license_key, edition_id):
         # we don't want.
         extract_members = [member for member in tar_file.getmembers()
                            if member.name.endswith('.mmdb')]
+        assert len(extract_members) == 1
         tar_file.extractall(path=db_dir_path, members=extract_members)
         # extractall keeps the subfolder structure. Account for this by
         # appending the path to the db_dir_path where it was extracted.
