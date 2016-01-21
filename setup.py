@@ -16,6 +16,9 @@ setup(
     url=maxmindupdater.__url__,
     packages=['maxmindupdater'],
     test_suite='nose.collector',
+    entry_points={
+        'console_scripts': ['maxmind-updater=maxmindupdater.__main__:main'],
+    },
     install_requires=[
         'requests >= 2.0.0, < 3.0.0',
     ],
