@@ -29,12 +29,12 @@ def hash_file(filename):
     return hasher.hexdigest()
 
 
-def update_db(curr_db, license_key):
+def update_db(curr_db, license_key, edition_id):
     curr_db_path = os.path.dirname(curr_db)
 
     r = requests.get(UPDATE_URL,
                      params={'license_key': license_key,
-                             'edition_id': 'GeoIP2-Country',
+                             'edition_id': edition_id,
                              'suffix': 'tar.gz.md5',
                              })
 
@@ -44,7 +44,7 @@ def update_db(curr_db, license_key):
 
     r = requests.get(UPDATE_URL, stream=True,
                      params={'license_key': license_key,
-                             'edition_id': 'GeoIP2-Country',
+                             'edition_id': edition_id,
                              'suffix': 'tar.gz',
                              })
 
