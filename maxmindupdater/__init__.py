@@ -68,7 +68,7 @@ def update_db(db_path, license_key, edition_id):
         # pyGeoIP could break in a variety of ways - we don't
         # particularly care which ones.
         sys.stderr.write('Retrieved invalid GeoIP database - '
-                         'check MaxMind account details: %s' % e)
+                         'check MaxMind account details: %s\n' % e)
     else:
         if not os.path.exists(os.path.dirname(db_path)):
             os.makedirs(os.path.dirname(db_path))
