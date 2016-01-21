@@ -1,8 +1,8 @@
 """Function to keep a maxmind database file up to date"""
 
-import shutil
-import os
 import hashlib
+import os
+import shutil
 import sys
 import tarfile
 
