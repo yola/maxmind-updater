@@ -29,8 +29,8 @@ def hash_file(filename):
     return hasher.hexdigest()
 
 
-def update_db(curr_db, license_key, edition_id):
-    curr_db_path = os.path.dirname(curr_db)
+def update_db(db_path, license_key, edition_id):
+    db_dir_path = os.path.dirname(db_path)
 
     r = requests.get(UPDATE_URL,
                      params={'license_key': license_key,
@@ -38,8 +38,8 @@ def update_db(curr_db, license_key, edition_id):
                              'suffix': 'tar.gz.md5',
                              })
 
-    curr_md5 = hash_file('%s.tar.gz' % curr_db)
-    if r.content == curr_md5 and os.path.exists(curr_db):
+    curr_md5 = hash_file('%s.tar.gz' % db_path)
+    if r.content == curr_md5 and os.path.exists(db_path):
         return
 
     r = requests.get(UPDATE_URL, stream=True,
@@ -48,20 +48,20 @@ def update_db(curr_db, license_key, edition_id):
                              'suffix': 'tar.gz',
                              })
 
-    with open('%s.tar.gz' % curr_db, 'wb') as local_zip:
+    with open('%s.tar.gz' % db_path, 'wb') as local_zip:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 local_zip.write(chunk)
 
-    with tarfile.open('%s.tar.gz' % curr_db) as tar_file:
+    with tarfile.open('%s.tar.gz' % db_path) as tar_file:
         # We only want the mmdb file. Maxmind kindly includes things
         # we don't want.
         extract_members = [member for member in tar_file.getmembers()
                            if member.name.endswith('.mmdb')]
-        tar_file.extractall(path=curr_db_path, members=extract_members)
+        tar_file.extractall(path=db_dir_path, members=extract_members)
         # extractall keeps the subfolder structure. Account for this by
-        # appending the path to the curr_db_path where it was extracted.
-        new_db = os.path.join(curr_db_path, extract_members[0].path)
+        # appending the path to the db_dir_path where it was extracted.
+        new_db = os.path.join(db_dir_path, extract_members[0].path)
     try:
         pass
         # TODO
@@ -73,7 +73,7 @@ def update_db(curr_db, license_key, edition_id):
         sys.stderr.write('Retrieved invalid GeoIP database - '
                          'check MaxMind account details: %s' % e)
     else:
-        if not os.path.exists(os.path.dirname(curr_db)):
-            os.makedirs(os.path.dirname(curr_db))
-        move(new_db, curr_db)
+        if not os.path.exists(os.path.dirname(db_path)):
+            os.makedirs(os.path.dirname(db_path))
+        move(new_db, db_path)
         os.rmdir(os.path.dirname(new_db))
