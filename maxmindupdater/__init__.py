@@ -64,11 +64,10 @@ def update_db(db_path, license_key, edition_id):
         # TODO
         # test_ip('8.8.8.8', new_db)
         # test_ip('2001:420::', new_db)
-    except Exception as e:
-        # pyGeoIP could break in a variety of ways - we don't
-        # particularly care which ones.
+    except Exception:
         sys.stderr.write('Retrieved invalid GeoIP database - '
-                         'check MaxMind account details: %s\n' % e)
+                         'check MaxMind account details.\n')
+        raise
     else:
         if not os.path.exists(os.path.dirname(db_path)):
             os.makedirs(os.path.dirname(db_path))
