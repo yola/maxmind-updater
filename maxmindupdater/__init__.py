@@ -11,8 +11,6 @@ import requests
 __version__ = '0.1.0'
 __url__ = 'https://github.com/yola/maxmind-updater'
 
-UPDATE_URL = 'https://download.maxmind.com/app/geoip_download'
-
 
 def hash_file(filename):
     if not os.path.exists(filename):
@@ -33,7 +31,7 @@ def update_db(db_path, license_key, edition_id):
     db_dir_path = os.path.dirname(db_path)
 
     def maxmind_download(suffix, **kwargs):
-        return requests.get(UPDATE_URL,
+        return requests.get('https://download.maxmind.com/app/geoip_download',
                             params={'license_key': license_key,
                                     'edition_id': edition_id,
                                     'suffix': suffix,
