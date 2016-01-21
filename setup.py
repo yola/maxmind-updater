@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+from codecs import open
 from setuptools import setup
 import maxmindupdater
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read().decode('utf8')
+with open('README.rst', encoding='utf8') as readme_file:
+    readme = readme_file.read()
 
 setup(
     name=maxmindupdater.__name__,
