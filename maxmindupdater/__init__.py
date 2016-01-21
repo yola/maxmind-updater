@@ -32,24 +32,22 @@ def hash_file(filename):
 def update_db(db_path, license_key, edition_id):
     db_dir_path = os.path.dirname(db_path)
 
-    r = requests.get(UPDATE_URL,
-                     params={'license_key': license_key,
-                             'edition_id': edition_id,
-                             'suffix': 'tar.gz.md5',
-                             })
+    def maxmind_download(suffix, **kwargs):
+        return requests.get(UPDATE_URL,
+                            params={'license_key': license_key,
+                                    'edition_id': edition_id,
+                                    'suffix': suffix,
+                                    },
+                            **kwargs)
 
+    expected_md5 = maxmind_download('tar.gz.md5').content
     curr_md5 = hash_file('%s.tar.gz' % db_path)
-    if r.content == curr_md5 and os.path.exists(db_path):
+    if expected_md5 == curr_md5 and os.path.exists(db_path):
         return
 
-    r = requests.get(UPDATE_URL, stream=True,
-                     params={'license_key': license_key,
-                             'edition_id': edition_id,
-                             'suffix': 'tar.gz',
-                             })
-
     with open('%s.tar.gz' % db_path, 'wb') as local_zip:
-        for chunk in r.iter_content(chunk_size=1024):
+        for chunk in maxmind_download('tar.gz', stream=True
+                                      ).iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 local_zip.write(chunk)
 
