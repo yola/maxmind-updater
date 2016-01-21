@@ -28,7 +28,7 @@ def _hash_file(filename):
 
 
 def update_db(db_path, license_key, edition_id):
-    db_dir_path = os.path.dirname(db_path)
+    db_dir_path = os.path.abspath(os.path.dirname(db_path))
     db_archive_path = '%s.tar.gz' % db_path
 
     def maxmind_download(suffix, **kwargs):
