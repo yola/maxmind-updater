@@ -1,6 +1,6 @@
 """Function to keep a maxmind database file up to date"""
 
-from shutil import move
+import shutil
 import os
 import hashlib
 import sys
@@ -73,5 +73,5 @@ def update_db(db_path, license_key, edition_id):
     else:
         if not os.path.exists(os.path.dirname(db_path)):
             os.makedirs(os.path.dirname(db_path))
-        move(new_db, db_path)
+        shutil.move(new_db, db_path)
         os.rmdir(os.path.dirname(new_db))
