@@ -69,7 +69,7 @@ def update_db(db_path, license_key, edition_id):
         sys.stderr.write('Retrieved invalid GeoIP database - '
                          'check MaxMind account details.\n')
         raise
-    if not os.path.exists(os.path.dirname(db_path)):
-        os.makedirs(os.path.dirname(db_path))
+    if not os.path.exists(db_dir_path):
+        os.makedirs(db_dir_path)
     shutil.move(new_db, db_path)
     os.rmdir(os.path.dirname(new_db))
