@@ -6,8 +6,8 @@ python:
 - '3.3'
 - '3.4'
 - '3.5'
-install: pip install -r requirements.txt
+install: pip install tox
 script:
-- ./scripts/travis_test.sh
+- tox
 env:
   secure: xjFmZv0Z+ceSvk1FHRlvNvXB19BXKa3ZkzsZNdWc3kNerXHQtfmaXnKO49r5kXlj1lAGS0+bDXX/WLWsZyUMFim4dqMEI85WJ8H/PPKrNU2Wdz1w5e+vsnJOspQYmTeZ9O10fZiqHFbzwa+MblV5cp3w4/1+mOay6KTJfQuJTXQ7zGs7+X8GinB4sJrrK7nPh0fMhoHZEQ9q+N+r+IGc+jWWWhVfjUfBYhjkm0dJaikPwQnUt/WVvl7ujb7WVWm5EKfI6rqYsG7BWZsC8w/hPziU7hRTHuHB7SYnOQTuze+ubK3VvvyDAViwCTLdadm2P1dtuZUJYBDTwusmxto5/u9D33VelNuJXBMCJ3OcKNaMoXOntCtofT0KDul0wtuXSOd75ox9mybOWCR4vxTgR2NUkcigT/vQ40VB7w6yota4lggO6HSvcEGvHykz/UvzFWg3IktzzIwe3yq5FgoEeCbSbMdhYVVPoTOFRkQLhd3Pl/IriOL3wfHhDKGBTtJJoXpYNSKkSNX5/+H21x6AArqHrmHCsKJWw3h3pjew6F0I7J0gmJRv8tGd2qVi8s1P9ra54080Wn2GFj4fr7wVY5W9xxbbhMQcu2KtvxMDb1vllgHu4hYJ5LhJVR3LrReJ8Rngq5lfIQQVWWlmdqZu4nnkgJ2R9w6aQSjHqDDOQV4=

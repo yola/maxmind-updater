@@ -1,4 +1,6 @@
 #!/bin/sh
+# This script requires that $LICENSE_KEY is available in the environment
+# (which Travis provides)
 
 set -eux
 
