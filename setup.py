@@ -1,20 +1,24 @@
 #!/usr/bin/env python
+import re
 from codecs import open
 from setuptools import setup
-import maxmindupdater
 
 with open('README.rst', encoding='utf8') as readme_file:
     readme = readme_file.read()
 
+with open('maxmindupdater/__init__.py', encoding='utf8') as init_py:
+    metadata = dict(re.findall(r"__([a-z]+)__ = '([^']+)'", init_py.read()))
+
+
 setup(
-    name=maxmindupdater.__name__,
-    version=maxmindupdater.__version__,
-    description=maxmindupdater.__doc__,
+    name='maxmindupdater',
+    version=metadata['version'],
+    description=metadata['doc'],
     long_description=readme,
     author='Yola',
     author_email='engineers@yola.com',
     license='MIT (Expat)',
-    url=maxmindupdater.__url__,
+    url=metadata['doc'],
     packages=['maxmindupdater'],
     test_suite='nose.collector',
     entry_points={
