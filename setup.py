@@ -26,6 +26,7 @@ setup(
     },
     install_requires=[
         'requests >= 2.0.0, < 3.0.0',
+        'maxminddb >= 1.0.0, < 2.0.0'
     ],
     classifiers=[
         'License :: OSI Approved :: MIT License',

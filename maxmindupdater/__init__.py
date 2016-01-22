@@ -4,6 +4,7 @@ import shutil
 import sys
 import tarfile
 
+import maxminddb
 import requests
 
 __doc__ = 'Function to keep a maxmind database file up to date'
@@ -58,17 +59,16 @@ def update_db(db_path, license_key, edition_id):
         tar_file.extractall(path=db_dir_path, members=extract_members)
         # extractall keeps the subfolder structure. Account for this by
         # appending the path to the db_dir_path where it was extracted.
-        new_db = os.path.join(db_dir_path, extract_members[0].path)
+        new_db_path = os.path.join(db_dir_path, extract_members[0].path)
     try:
-        pass
-        # TODO
-        # test_ip('8.8.8.8', new_db)
-        # test_ip('2001:420::', new_db)
+        db = maxminddb.open_database(new_db_path)
+        db.get('8.8.8.8')
+        db.get('2001:420::')
     except Exception:
         sys.stderr.write('Retrieved invalid GeoIP database - '
                          'check MaxMind account details.\n')
         raise
     if not os.path.exists(db_dir_path):
         os.makedirs(db_dir_path)
-    shutil.move(new_db, db_path)
-    os.rmdir(os.path.dirname(new_db))
+    shutil.move(new_db_path, db_path)
+    os.rmdir(os.path.dirname(new_db_path))
