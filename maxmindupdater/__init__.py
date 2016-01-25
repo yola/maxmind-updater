@@ -20,10 +20,11 @@ def _hash_file(filename):
     hasher = hashlib.md5()
 
     with open(filename, 'rb') as f:
-        buf = f.read(block_size)
-        while len(buf) > 0:
-            hasher.update(buf)
+        while True:
             buf = f.read(block_size)
+            if not buf:
+                break
+            hasher.update(buf)
     return hasher.hexdigest()
 
 
