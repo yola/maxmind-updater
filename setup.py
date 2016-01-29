@@ -18,7 +18,7 @@ setup(
     author='Yola',
     author_email='engineers@yola.com',
     license='MIT (Expat)',
-    url=metadata['doc'],
+    url=metadata['url'],
     packages=['maxmindupdater'],
     entry_points={
         'console_scripts': ['maxmind-updater=maxmindupdater.__main__:main'],
