@@ -20,7 +20,6 @@ setup(
     license='MIT (Expat)',
     url=metadata['doc'],
     packages=['maxmindupdater'],
-    test_suite='nose.collector',
     entry_points={
         'console_scripts': ['maxmind-updater=maxmindupdater.__main__:main'],
     },
