@@ -7,4 +7,4 @@ configurator --local userservice qa
 license_key=$(python -c "print __import__('json').load(open('configuration.json'))['userservice']['geoip']['license_key']")
 rm configuration.json
 
-./virtualenv/bin/python maxmindupdater/__main__.py geoip.mmdb $license_key GeoIP2-Country
+./virtualenv/bin/python -m maxmindupdater geoip.mmdb $license_key GeoIP2-Country
